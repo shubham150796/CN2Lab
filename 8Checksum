@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+unsigned short checksum()
+{
+ int i,sum=0;
+    unsigned short field[10];
+ 
+ printf("enter 16 bit words\n");
+ for(i=0;i<9;i++)
+ {
+   printf("Field %d =",i+1);
+   scanf("%x",&field[i]);
+   
+   sum=sum+(unsigned short)field[i];
+   while(sum>>16)
+   sum=(sum & 0xFFFF)+(sum>>16); 
+ }
+    sum=~sum;
+    return (unsigned short)sum;
+}
+
+
+
+
+
+
+void main()
+{
+unsigned short result1,result2;
+result1=checksum();
+printf("computed checksum at sender %x", result1);
+result2=checksum();
+printf("computed checksum at resulta11` %x", result2);
+if(result1==result2)
+printf("No error");
+else
+printf("error");
+}
+

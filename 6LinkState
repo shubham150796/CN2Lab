@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int distance[10], visited[10], a[10][10], n;
+
+void dijkstras(int source)
+{
+	int i, j, least, vertex;
+	visited[source] = 1;
+	
+	for(i=0; i<n; i++)
+	{
+		least = 999;
+		for(j=0; j<n; j++)
+		{
+			if(distance[j] < least && !visited[j])
+			{
+				least = distance[j];
+				vertex = j;
+			}
+		}
+	
+		visited[vertex] = 1;
+		for(j=0; j<n; j++)
+		{
+			if(visited[j] == 0 && (distance[j] > distance[vertex] + a[vertex][j]))
+				distance[j] = distance[vertex] + a[vertex][j];
+		}
+	}
+	printf("\n\nRouter %d:", source);
+	for(i=0; i<n; i++)
+		printf("\nDistance to Router %d: %d", i, distance[i]);
+}
+
+int main()
+{
+	int i, j, source;
+	printf("\nEnter the number of routers:\t");
+	scanf("%d", &n);
+	printf("\nEnter the distance matrix:\n")r;
+	for(i=0; i<n; i++)
+		for(j=0; j<n; j++)
+			scanf("%d", &a[i][j]);
+	
+	for(i=0; i<n; i++)
+	{
+		printf("\nLink State packet for router %d", i);
+		printf("\nNode\tDistance\n");
+		for(j=0; j<n; j++)
+			if(a[i][j] != 0 && a[i][j] != 99)
+				printf("%d\t%d\n", j, a[i][j]);
+	}
+	for(source=0; source<n; source++)
+	{
+		for(i=0; i<n; i++)
+		{
+			visited[i] = 0;
+			distance[i] = a[source][i];
+		}
+		dijkstras(source);
+	}
+	return 0;
+}
